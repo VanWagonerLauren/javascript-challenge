@@ -1,61 +1,67 @@
 // from data.js
 var tableData = data;
-//Console.log the UFO Sightings from data.js
-console.log(tabledata)
-//loop through data and console.log each sighting object
-var tbody = d3.select("tbody");
-    console.log(data);
-//use d3 to append the one table row ('tr') for each UFO sighting object
-data.forEach(function(UFOsighting
-    console.log(UFOsighting)
-//use object.entries to console.log each value
-data.forEach(function(UFOsighting) {
-    console.log(UFOsighting);
-var row = tbody.append("tr");
-});
-Object.entries(UFOsighting).forEach(function([key, value]) {
-    console.log(key, value);
-  });
-});
-//use d3 to append 1 cell per value
-data.forEach(function(UFOsighting) {
-    console.log(UFOsighting);
-var row = tbody.append("tr");
-Object.entries(UFOsighting).forEach(function([key, value]) {
-    console.log(key, value);
-    var cell = row.append("td");
-    cell.text(value)
-  });
-});
+
+
+// Creating References to tbody, input and button
+var $tbody = d3.select("tbody");
+
+
 var button = d3.select("#filter-btn");
-button.on("click", function(event){
-    d3.event.preventDefault();
-    tbody.html("");
-//use d3 to update each cells text with values
-var inputElement = d3.select("#datetime");
-var inputValue = inputElement.property("value");
-console.log(inputValue);
-var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
-console.log(filteredData);
-filteredData.forEach(function(selections) {
-    console.log(selections);
-
-data.forEach(function(UFOsighting) {
-    console.log(UFOsighting);
-var row = tbody.append("tr");
 
 
-Object.entries(UFOsighting).forEach(function([key, value]) {
-    console.log(key, value);
-var cell = row.append("td");
-cell.text(value);
-  });
-});
-// Arrow Functions
-data.forEach((UFOsighting) => {
-    var row = tbody.append("tr");
-    Object.entries(UFOsighting).forEach(([key, value]) => {
-      var cell = row.append("td");
-      cell.text(value);
-    });
-  });
+var inputFieldDate = d3.select("#datetime");
+
+
+var inputFieldCity = d3.select("#city");
+
+
+var columns = ["datetime", "city", "state", "country", "shape", "durationMinutes", "comments"]
+
+// Inputing the data into the HTML
+
+
+var addData = (dataInput) => {
+
+
+   dataInput.forEach(ufoSightings => {
+
+
+       var row = $tbody.append("tr");
+
+
+       columns.forEach(column => row.append("td").text(ufoSightings[column])
+       )
+
+
+   });
+
+
+}
+// Event Handler Function
+function runEvent(){
+
+
+   // Prevent Page from Refreshing
+   //d3.event.preventDefault();
+   // Select the input element and get the raw HTML node
+
+   var inputElement = d3.select("#datetime");
+
+   // Get the input value (date) from the input element
+   var inputData = inputElement.property("value");
+
+   //Check for input data
+       if (inputData == "") {inputData = tableData[0].datetime;}
+
+
+   // Filter the data.js by the input value
+   var filteredData = tableData.filter(sighting => sighting.datetime === inputData);
+
+   // Call the createTable function with the
+   // filteredData as the parameter
+
+   createTable(filteredData);
+
+};
+
+runEvent();
